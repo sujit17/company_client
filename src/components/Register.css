@@ -1,0 +1,14 @@
+.register {
+    padding: 25px;
+    display: flex;
+    flex-direction: column;
+    background-color: rgb(20, 22, 22);
+    color: white;
+
+}
+
+.register__heading {
+    margin: 10px auto;
+    color: rgb(189, 180, 168) !important;
+}
+
