@@ -1,5 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { MDBCol, MDBInput, MDBBtn } from "mdbreact";
+import {
+  MDBSelect,
+  MDBSelectInput,
+  MDBSelectOptions,
+  MDBSelectOption,
+  MDBCol,
+  MDBInput,
+  MDBBtn,
+} from "mdbreact";
 import { connect } from "react-redux";
 import * as action from "../actions/companyData";
 import "./Register.css";
@@ -30,9 +38,6 @@ function Register(props) {
     }
   }, [id]);
 
-  // const record = props.companyDataList[0];
-  // console.log("<><><><>", props.companyDataList);
-
   const validate = () => {
     let temp = { ...errors };
     temp.name = companyValue.name ? "" : "This field is required.";
@@ -60,6 +65,7 @@ function Register(props) {
     if (validate()) {
       if (id === undefined) {
         props.crateCompanyData(companyValue, onSuccess);
+        history.push("/");
       } else {
         props.updateCompanyData(id, companyValue, onSuccess);
         history.push("/");
@@ -73,6 +79,17 @@ function Register(props) {
       [event.target.name]: event.target.value,
     });
   };
+
+  //Dropdown
+
+  const [stateCity, setStateCity] = useState({
+    sc: [
+      { state: "Maharashtra", city: ["Mumbai", "Pune", "Nagpur"] },
+      { state: " Madhya Pradesh", city: ["Indore", "Bhopal", "Gwalior"] },
+      { state: "Gujarat", city: ["Ahmedabad", "Surat", "Rajkot"] },
+    ],
+  });
+
   return (
     <div className="register">
       <h2 className=" register__heading">Register your Company</h2>
@@ -192,6 +209,7 @@ function Register(props) {
             <div className="valid-feedback">Looks good!</div>
           </MDBInput>
         </MDBCol>
+
         <button type="submit" className="btn btn-primary">
           {id === undefined ? "Submit" : "Update"}
           {/* Submit */}

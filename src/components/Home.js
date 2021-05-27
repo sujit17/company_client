@@ -41,7 +41,8 @@ function Home(props) {
   const onPaginationChange = (start, end) => {
     setPagination({ start: start, end: end });
   };
-  console.log(searchTerm);
+
+  //Dropdown
 
   return (
     <div className="container">
