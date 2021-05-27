@@ -16,7 +16,11 @@ function App() {
     <Router>
       <div className="app">
         <Switch>
-          <Route exact path="/registration">
+          <Route path="/registration/:id">
+            <Register />
+          </Route>
+
+          <Route path="/registration">
             <Register />
           </Route>
 

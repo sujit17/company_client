@@ -1,71 +1,13 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { MDBCol, MDBInput, MDBBtn } from "mdbreact";
 import { connect } from "react-redux";
 import * as action from "../actions/companyData";
 import "./Register.css";
+import { useHistory, useParams } from "react-router-dom";
 
 function Register(props) {
-  // const intialState = {
-  //   name: {
-  //     value: "",
-  //     valid: false,
-  //   },
-  //   description: {
-  //     value: "",
-  //     valid: false,
-  //   },
-  //   number: {
-  //     value: "",
-  //     valid: false,
-  //   },
-  //   email: {
-  //     value: "",
-  //     valid: false,
-  //   },
-  //   city: {
-  //     value: "",
-  //     valid: false,
-  //   },
-  //   state: {
-  //     value: "",
-  //     valid: false,
-  //   },
-  //   logoUrl: {
-  //     value: "",
-  //     valid: false,
-  //   },
-  // };
-
-  const [company, setCompany] = useState({
-    name: {
-      value: "",
-      valid: false,
-    },
-    description: {
-      value: "",
-      valid: false,
-    },
-    number: {
-      value: "",
-      valid: false,
-    },
-    email: {
-      value: "",
-      valid: false,
-    },
-    city: {
-      value: "",
-      valid: false,
-    },
-    state: {
-      value: "",
-      valid: false,
-    },
-    logoUrl: {
-      value: "",
-      valid: false,
-    },
-  });
+  const { id } = useParams();
+  const history = useHistory();
 
   const [companyValue, setCompanyValue] = useState({
     name: "",
@@ -77,24 +19,55 @@ function Register(props) {
     logoUrl: "",
   });
 
+  const [errors, setErrors] = useState({});
+
+  useEffect(() => {
+    if (id != 0) {
+      setCompanyValue({
+        ...props.companyDataList.find((x) => x._id === id),
+      });
+      setErrors({});
+    }
+  }, [id]);
+
+  // const record = props.companyDataList[0];
+  // console.log("<><><><>", props.companyDataList);
+
+  const validate = () => {
+    let temp = { ...errors };
+    temp.name = companyValue.name ? "" : "This field is required.";
+    temp.description = companyValue.description
+      ? ""
+      : "This field is required.";
+    temp.email = companyValue.email ? "" : "This field is required.";
+    temp.number = companyValue.number ? "" : "This field is required.";
+    temp.logoUrl = companyValue.logoUrl ? "" : "This field is required.";
+    temp.state = companyValue.state ? "" : "This field is required.";
+    temp.city = companyValue.city ? "" : "This field is required.";
+
+    setErrors({
+      ...temp,
+    });
+    return Object.values(temp).every((x) => x === "");
+  };
+
   const submitHandler = (event) => {
     event.preventDefault();
     event.target.className += " was-validated";
     const onSuccess = () => {
-      window.alert("Added Your Company");
+      window.alert("Submitted successfully");
     };
-
-    props.crateCompanyData(companyValue, onSuccess);
+    if (validate()) {
+      if (id === undefined) {
+        props.crateCompanyData(companyValue, onSuccess);
+      } else {
+        props.updateCompanyData(id, companyValue, onSuccess);
+        history.push("/");
+      }
+    }
   };
 
   const onInputChange = (event) => {
-    setCompany({
-      ...company,
-      [event.target.name]: {
-        value: event.target.value,
-        valid: !!event.target.value,
-      },
-    });
     setCompanyValue({
       ...companyValue,
       [event.target.name]: event.target.value,
@@ -103,36 +76,37 @@ function Register(props) {
   return (
     <div className="register">
       <h2 className=" register__heading">Register your Company</h2>
-      <form className="needs-validation" onSubmit={submitHandler} noValidate>
-        <MDBCol md="4">
+      <form
+        className="needs-validation"
+        onSubmit={submitHandler}
+        noValidate
+        autoComplete="off"
+      >
+        <MDBCol md="6">
           <MDBInput
-            className={`text__color ${
-              company.name.valid ? "is-valid" : "is-invalid"
-            }`}
+            className="text__color"
             name="name"
             type="text"
             id="materialFormRegisterNameEx"
             label="Company Name"
-            value={company.name.value}
+            value={companyValue.name}
             onChange={onInputChange}
-            autocomplete="off"
             required
+            {...(errors.name && { error: true, helperText: errors.name })}
           >
             <div className="valid-feedback">Looks good!</div>
           </MDBInput>
         </MDBCol>
 
-        <MDBCol md="4">
+        <MDBCol md="6">
           <MDBInput
-            className={`text__color ${
-              company.description.valid ? "is-valid" : "is-invalid"
-            }`}
+            className="text__color"
             name="description"
             type="textarea"
-            rows={5}
+            rows={6}
             id="materialFormRegisterNameEx"
             label="Company Description"
-            value={company.description.value}
+            value={companyValue.description}
             onChange={onInputChange}
             required
           >
@@ -140,33 +114,30 @@ function Register(props) {
           </MDBInput>
         </MDBCol>
 
-        <MDBCol md="4">
+        <MDBCol md="6">
           <MDBInput
-            className={`text__color ${
-              company.number.valid ? "is-valid" : "is-invalid"
-            }`}
+            className="text__color"
             name="number"
             type="number"
             id="materialFormRegisterNameEx"
             label="Mobile Number"
-            value={company.number.value}
+            value={companyValue.number}
             onChange={onInputChange}
             required
+            {...(errors.name && { error: true, helperText: errors.name })}
           >
             <div className="valid-feedback">Looks good!</div>
           </MDBInput>
         </MDBCol>
 
-        <MDBCol md="4">
+        <MDBCol md="6">
           <MDBInput
-            className={`text__color ${
-              company.email.valid ? "is-valid" : "is-invalid"
-            }`}
+            className="text__color"
             name="email"
             type="text"
             id="materialFormRegisterNameEx"
             label="Email"
-            value={company.email.value}
+            value={companyValue.email}
             onChange={onInputChange}
             required
           >
@@ -174,16 +145,15 @@ function Register(props) {
           </MDBInput>
         </MDBCol>
 
-        <MDBCol md="4">
+        <MDBCol md="6">
           <MDBInput
-            className={`text__color ${
-              company.logoUrl.valid ? "is-valid" : "is-invalid"
-            }`}
+            className="text__color"
             name="logoUrl"
-            type="text"
+            type="textarea"
+            rows={2}
             id="materialFormRegisterNameEx"
             label="Logo URL"
-            value={company.logoUrl.value}
+            value={companyValue.logoUrl}
             onChange={onInputChange}
             required
           >
@@ -191,43 +161,40 @@ function Register(props) {
           </MDBInput>
         </MDBCol>
 
-        <MDBCol md="4">
+        <MDBCol md="6">
           <MDBInput
-            className={`text__color ${
-              company.state.valid ? "is-valid" : "is-invalid"
-            }`}
+            className="text__color"
             name="state"
             type="text"
             id="materialFormRegisterNameEx"
             label="State"
-            value={company.state.value}
+            value={companyValue.state}
             onChange={onInputChange}
-            autocomplete="off"
+            autoComplete="off"
             required
           >
             <div className="valid-feedback">Looks good!</div>
           </MDBInput>
         </MDBCol>
 
-        <MDBCol md="4">
+        <MDBCol md="6">
           <MDBInput
-            className={`text__color ${
-              company.state.valid ? "is-valid" : "is-invalid"
-            }`}
+            className="text__color"
             name="city"
             type="text"
             id="materialFormRegisterNameEx"
             label="City"
-            value={company.city.value}
+            value={companyValue.city}
             onChange={onInputChange}
-            autocomplete="off"
+            autoComplete="off"
             required
           >
             <div className="valid-feedback">Looks good!</div>
           </MDBInput>
         </MDBCol>
         <button type="submit" className="btn btn-primary">
-          Submit
+          {id === undefined ? "Submit" : "Update"}
+          {/* Submit */}
         </button>
       </form>
     </div>
@@ -241,5 +208,6 @@ const mapStateToProps = (state) => ({
 const mapActionToProps = {
   crateCompanyData: action.create,
   updateCompanyData: action.update,
+  fetchOneCompanyData: action.fetchOne,
 };
 export default connect(mapStateToProps, mapActionToProps)(Register);

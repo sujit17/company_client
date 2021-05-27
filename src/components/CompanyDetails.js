@@ -11,8 +11,8 @@ function CompanyDetails(props) {
   // const [company, setCompany] = useState();
 
   useEffect(() => {
-    props.fetchAllCompanyData(id);
-  }, [id]);
+    props.fetchOneCompanyData(id);
+  }, []);
 
   const company = props.companyDataList[0];
   console.log("<><><><>", company);
@@ -41,7 +41,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapActionToProps = {
-  fetchAllCompanyData: action.fetchOne,
+  fetchOneCompanyData: action.fetchOne,
 };
 
 export default connect(mapStateToProps, mapActionToProps)(CompanyDetails);

@@ -3,11 +3,11 @@
     display: flex;
     flex-direction: column;
     background-color: rgb(20, 22, 22);
-    color: white !important; 
+    color: white !important;
 }
 
 .needs-validation {
-    margin: 10px auto;
+    margin-left: 300px;
     width: 100%;
 }
 

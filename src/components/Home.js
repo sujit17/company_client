@@ -8,6 +8,7 @@ import Pagination from "./Pagination";
 
 function Home(props) {
   const [searchTerm, setSearchTerm] = useState("");
+  const [currentId, setCurrentId] = useState(0);
 
   useEffect(() => {
     props.fetchAllCompanyData();
@@ -16,9 +17,7 @@ function Home(props) {
   //Delete
   const deleteCompany = (id) => {
     const onSuccess = () => {
-      <Alert variant="danger">
-        <h1> {props.companyDataList.name} Will be deleted from DB.</h1>
-      </Alert>;
+      alert(`Record deleted from DB.`);
     };
     props.deleteData(id, onSuccess);
   };
@@ -130,7 +129,8 @@ function Home(props) {
                     </Link>
                     <Link
                       class="btn btn-outline-primary mr-2"
-                      // to={`/users/edit/${user.id}`}
+                      to={`/registration/${company._id}`}
+                      // onClick={() => setCurrentId(company._id)}
                     >
                       Edit
                     </Link>
