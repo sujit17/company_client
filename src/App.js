@@ -9,6 +9,7 @@ import {
 import Header from "./components/Header";
 import Home from "./components/Home";
 import Register from "./components/Register";
+import CompanyDetails from "./components/CompanyDetails";
 
 function App() {
   return (
@@ -17,6 +18,10 @@ function App() {
         <Switch>
           <Route exact path="/registration">
             <Register />
+          </Route>
+
+          <Route exact path="/details/:id">
+            <CompanyDetails />
           </Route>
 
           <Route exact path="/">

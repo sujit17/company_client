@@ -1,0 +1,56 @@
+.action__buttons {
+    display: flex;
+}
+
+.home__link {
+    color: black;
+    font-weight: 500;
+}
+
+.home__search {
+    margin-top: 10px;
+}
+
+.companyDetail {
+    background-color: #393e46;
+    color: white !important;
+    padding-top: 20px;
+}
+
+.company__info {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px;
+}
+
+.company__name {
+    margin-left: 40%;
+}
+
+.company__logo>img {
+    width: 200px;
+    margin-bottom: 20px;
+    border-radius: 50%;
+}
+
+.company__desc>p {
+    margin-left: 20px;
+    font-size: 1.5em !important;
+
+}
+
+.company__contact {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.home__bar {
+    display: flex;
+    justify-content: space-between;
+}
+
+.home__bar>button {
+    margin-top: 10px !important;
+    font-weight: 500 !important;
+}
