@@ -65,7 +65,7 @@ function Register(props) {
     if (validate()) {
       if (id === undefined) {
         props.crateCompanyData(companyValue, onSuccess);
-        history.push("/");
+        // history.push("/");
       } else {
         props.updateCompanyData(id, companyValue, onSuccess);
         history.push("/");
@@ -92,7 +92,10 @@ function Register(props) {
 
   return (
     <div className="register">
-      <h2 className=" register__heading">Register your Company</h2>
+      <h2 className=" register__heading">
+        {" "}
+        {id === undefined ? "Register" : "Update"} your Company
+      </h2>
       <form
         className="needs-validation"
         onSubmit={submitHandler}

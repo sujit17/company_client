@@ -28,7 +28,6 @@ function Home(props) {
     const isReversed = sortType === "asc" ? 1 : -1;
     return isReversed * a.name.localeCompare(b.name);
   });
-  console.log(companyData);
 
   //Pagination
   const [showPerPage, setShowPerPage] = useState(2);
@@ -41,8 +40,6 @@ function Home(props) {
   const onPaginationChange = (start, end) => {
     setPagination({ start: start, end: end });
   };
-
-  //Dropdown
 
   return (
     <div className="container">
