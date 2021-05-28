@@ -15,7 +15,6 @@ function CompanyDetails(props) {
   }, []);
 
   const company = props.companyDataList[0];
-  console.log("<><><><>", company);
 
   return (
     <div className="companyDetail">

@@ -1,13 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {
-  MDBSelect,
-  MDBSelectInput,
-  MDBSelectOptions,
-  MDBSelectOption,
-  MDBCol,
-  MDBInput,
-  MDBBtn,
-} from "mdbreact";
+import { MDBCol, MDBInput } from "mdbreact";
 import { connect } from "react-redux";
 import * as action from "../actions/companyData";
 import "./Register.css";
@@ -90,6 +82,11 @@ function Register(props) {
     ],
   });
 
+  // const citygroup = stateCity.sc.filter((state) => {
+  //   return state.state === companyValue.state;
+  // });
+  // console.log(citygroup);
+
   return (
     <div className="register">
       <h2 className=" register__heading">
@@ -129,6 +126,10 @@ function Register(props) {
             value={companyValue.description}
             onChange={onInputChange}
             required
+            {...(errors.description && {
+              error: true,
+              helperText: errors.description,
+            })}
           >
             <div className="valid-feedback">Looks good!</div>
           </MDBInput>
@@ -212,6 +213,33 @@ function Register(props) {
             <div className="valid-feedback">Looks good!</div>
           </MDBInput>
         </MDBCol>
+
+        {/* <MDBCol md="6">
+          
+          <label>State</label>
+          <select
+            className="browser-default custom-select"
+            value={companyValue.state}
+          >
+            {stateCity.sc.map((state, i) => {
+              return <option key={i}>{state.state}</option>;
+            })}
+          </select>
+        </MDBCol> */}
+
+        {/* <MDBCol md="6"> */}
+          {/* <MDBSelect label="State"></MDBSelect> */}
+          {/* <label>State</label>
+          <select
+            className="browser-default custom-select"
+            onChange={onInputChange}
+            value={companyValue.state}
+          >
+            {stateCity.sc.map((state, i) => {
+              return <option key={i}>{state.state}</option>;
+            })}
+          </select>
+        </MDBCol> */}
 
         <button type="submit" className="btn btn-primary">
           {id === undefined ? "Submit" : "Update"}
