@@ -30,7 +30,7 @@ function Home(props) {
   });
 
   //Pagination
-  const [showPerPage, setShowPerPage] = useState(2);
+  const [showPerPage, setShowPerPage] = useState(4);
 
   const [pagination, setPagination] = useState({
     start: 0,
